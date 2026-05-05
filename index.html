@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Week-end à Cassis — 8-10 mai 2026</title>
+
+<!-- Mobile / PWA -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1a5f7a">
+<meta name="description" content="Carnet de voyage — Cassis, vendredi 8 au dimanche 10 mai 2026.">
+<link rel="manifest" href="manifest.json">
+
+<!-- iOS Safari (Add to Home Screen) -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Week-end à Cassis">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+
+<style>
+  /* ============================================================
+     Carnet de voyage Cassis — version web mobile-first
+     Reproduit fidèlement la maquette du PDF v13 (palette, polices,
+     cartes, badges) en s'adaptant à un viewport smartphone.
+     Le bloc @media print en fin de fichier réactive les règles
+     d'origine pour une impression propre depuis le navigateur.
+     ============================================================ */
+
+  :root {
+    /* Palette identique au PDF */
+    --bleu-mer:    #1a5f7a;
+    --bleu-mer-2:  #2d8aa3;
+    --ocre:        #d4a574;
+    --ocre-clair:  #f0c896;
+    --violet:      #6b4d7a;
+    --violet-bg:   #ede4f0;
+    --vert:        #5a7a4a;
+    --orange:      #c8511c;
+    --creme:       #faf6ee;
+    --creme-2:     #f0e6d3;
+    --creme-3:     #fdf2e7;
+    --texte:       #2b2823;
+    --texte-2:     #4a463e;
+    --texte-3:     #5a544a;
+    --gris:        #8a8378;
+    --gris-line:   #c9bfae;
+    --blanc-casse: #f8f1e3;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    font-size: 11pt;            /* base un poil plus grande qu'en print pour la lisibilité écran */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    color: var(--texte);
+    line-height: 1.5;
+    margin: 0;
+    background: var(--creme);
+  }
+
+  /* Conteneur principal centré, lisible en tablette aussi */
+  .page-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 6mm 5mm;
+  }
+
+  /* ============== COVER ============== */
+  .cover {
+    height: 100vh;
+    min-height: 600px;
+    width: 100%;
+    background:
+      linear-gradient(135deg,
+        rgba(26, 95, 122, 0.78) 0%,
+        rgba(45, 138, 163, 0.68) 50%,
+        rgba(75, 163, 184, 0.55) 100%),
+      url('cover-calanque.jpg') center / cover no-repeat;
+    color: var(--blanc-casse);
+    position: relative;
+    padding: 18vh 7vw 12vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .cover::after {
+    content: "";
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 30vh;
+    background: linear-gradient(to bottom,
+      transparent,
+      rgba(26, 95, 122, 0.65) 50%,
+      rgba(212, 165, 116, 0.45));
+    pointer-events: none;
+  }
+  .cover .eyebrow {
+    font-family: "Georgia", serif; font-style: italic;
+    font-size: clamp(13px, 3.4vw, 16px);
+    letter-spacing: 0.1em;
+    opacity: 0.85;
+    margin-bottom: 5mm;
+  }
+  .cover h1 {
+    font-family: "Georgia", serif;
+    font-size: clamp(48px, 13vw, 80px);
+    line-height: 1;
+    margin: 0 0 6mm 0;
+    font-weight: normal;
+    letter-spacing: -0.02em;
+    position: relative;
+    z-index: 1;
+  }
+  .cover h1 em { font-style: italic; color: var(--ocre-clair); }
+  .cover .dates {
+    font-size: clamp(15px, 4vw, 20px);
+    letter-spacing: 0.05em;
+    border-top: 1px solid rgba(248, 241, 227, 0.4);
+    border-bottom: 1px solid rgba(248, 241, 227, 0.4);
+    padding: 3mm 0;
+    display: inline-block;
+    margin-top: 6mm;
+    position: relative; z-index: 1;
+  }
+  .cover .footer-cover {
+    position: absolute;
+    bottom: 8vh; left: 7vw; right: 7vw;
+    font-family: "Georgia", serif; font-style: italic;
+    font-size: clamp(12px, 3.2vw, 14px);
+    opacity: 0.9; z-index: 2;
+  }
+  .cover .footer-cover .line {
+    width: 28mm; height: 1px;
+    background: rgba(248, 241, 227, 0.5);
+    margin: 0 0 3mm 0;
+  }
+
+  /* ============== TOC ============== */
+  .toc h2 {
+    font-family: "Georgia", serif; font-weight: normal;
+    font-size: clamp(26px, 7vw, 36px);
+    color: var(--bleu-mer);
+    margin: 0 0 6mm 0;
+    border-bottom: 2px solid var(--ocre);
+    padding-bottom: 3mm;
+  }
+  .toc-item {
+    display: flex; justify-content: flex-start; align-items: baseline;
+    gap: 4mm;
+    padding: 4mm 0;
+    border-bottom: 1px dotted var(--gris-line);
+  }
+  .toc-num {
+    font-family: "Georgia", serif; font-style: italic;
+    color: var(--ocre);
+    font-size: clamp(18px, 5vw, 22px);
+    min-width: 12mm;
+    flex-shrink: 0;
+  }
+  .toc-title {
+    flex: 1;
+    font-size: clamp(13px, 3.6vw, 16px);
+    color: var(--texte);
+  }
+  .toc-sub {
+    color: var(--gris); font-style: italic;
+    font-size: clamp(11px, 3vw, 13px);
+    display: block; margin-top: 1mm;
+  }
+
+  /* ============== Section headers ============== */
+  h2.section-title {
+    font-family: "Georgia", serif; font-weight: normal;
+    font-size: clamp(24px, 6.5vw, 32px);
+    color: var(--bleu-mer);
+    margin: 12mm 0 1mm 0;
+  }
+  .section-meta {
+    font-family: "Georgia", serif; font-style: italic;
+    color: var(--ocre);
+    font-size: clamp(13px, 3.4vw, 15px);
+    margin-bottom: 6mm; padding-bottom: 3mm;
+    border-bottom: 2px solid var(--ocre);
+  }
+
+  h3.category {
+    font-family: "Georgia", serif; font-weight: normal;
+    font-size: clamp(17px, 4.6vw, 22px);
+    color: var(--bleu-mer);
+    margin: 7mm 0 1mm 0; padding-bottom: 2mm;
+    border-bottom: 1px solid var(--ocre);
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: 3mm;
+  }
+  h3.category .cat-num {
+    font-style: italic; color: var(--ocre);
+    font-size: clamp(15px, 4vw, 18px);
+  }
+  h3.category .cat-tag {
+    font-size: clamp(11px, 2.8vw, 12px);
+    color: var(--gris); margin-left: auto; font-style: italic;
+  }
+  .category-intro {
+    font-style: italic; color: var(--texte-3);
+    font-size: clamp(12px, 3.2vw, 13px);
+    margin: 0 0 4mm 0;
+  }
+
+  /* ============== Boutons d'action (Maps / Tel) ============== */
+  .card-actions {
+    display: flex;
+    gap: 2mm;
+    margin-top: 3mm;
+    padding-top: 2.5mm;
+    border-top: 1px dotted var(--gris-line);
+    flex-wrap: wrap;
+  }
+  .btn-link {
+    display: inline-block;
+    font-size: clamp(10px, 2.6vw, 11px);
+    padding: 2mm 4mm;
+    border-radius: 1.5mm;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    -webkit-tap-highlight-color: rgba(26, 95, 122, 0.2);
+    transition: transform 0.1s ease, opacity 0.15s ease;
+  }
+  .btn-link:active { transform: scale(0.97); opacity: 0.85; }
+  .btn-maps { background: var(--bleu-mer); color: var(--blanc-casse); }
+  .btn-tel  { background: var(--ocre);     color: var(--texte); }
+  .btn-web  {
+    background: transparent;
+    color: var(--bleu-mer);
+    border: 1px solid var(--bleu-mer);
+    padding-top: calc(2mm - 1px);   /* compense la bordure pour aligner sur les autres */
+    padding-bottom: calc(2mm - 1px);
+  }
+  .activity-card .btn-web {
+    padding-top: calc(1.5mm - 1px);
+    padding-bottom: calc(1.5mm - 1px);
+  }
+  .activity-card .btn-link {
+    font-size: clamp(9.5px, 2.4vw, 10.5px);
+    padding: 1.5mm 3mm;
+  }
+
+  h3 {
+    font-family: "Georgia", serif; font-weight: normal;
+    font-size: clamp(15px, 4vw, 18px);
+    color: var(--bleu-mer);
+    margin: 6mm 0 2mm 0;
+  }
+  h4 {
+    font-family: "Helvetica Neue", sans-serif; font-weight: 600;
+    font-size: clamp(12px, 3vw, 13px);
+    color: var(--texte);
+    margin: 4mm 0 2mm 0;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  p { margin: 0 0 2.5mm 0; font-size: clamp(13px, 3.4vw, 14px); }
+
+  /* ============== Cartes restos ============== */
+  .resto-card {
+    background: var(--creme);
+    border-left: 3px solid var(--ocre);
+    padding: 4mm 5mm; margin-bottom: 4mm;
+    border-radius: 0 1.5mm 1.5mm 0;
+  }
+  .resto-card.featured {
+    background: var(--creme-2);
+    border-left: 3px solid var(--bleu-mer);
+  }
+  .resto-card .resto-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    flex-wrap: wrap; gap: 2mm;
+    margin-bottom: 1mm;
+  }
+  .resto-card h3 {
+    margin: 0;
+    font-size: clamp(15px, 4vw, 18px);
+    color: var(--bleu-mer);
+  }
+  .resto-card .badge {
+    font-size: clamp(10px, 2.6vw, 11px);
+    background: var(--bleu-mer); color: var(--blanc-casse);
+    padding: 1mm 3mm; border-radius: 2mm;
+    font-weight: 600; letter-spacing: 0.05em;
+    text-transform: uppercase; white-space: nowrap;
+  }
+  .resto-card .badge.gold   { background: var(--ocre); color: var(--texte); }
+  .resto-card .badge.green  { background: var(--vert); color: var(--blanc-casse); }
+  .resto-card .badge.purple { background: var(--violet); color: var(--blanc-casse); }
+  .resto-card .meta {
+    color: var(--gris);
+    font-size: clamp(11px, 2.9vw, 12px);
+    font-style: italic; margin-bottom: 2mm;
+  }
+  .resto-card .desc {
+    font-size: clamp(13px, 3.4vw, 14px);
+    margin-bottom: 3mm;
+  }
+  .resto-card .infos {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5mm 4mm;
+    font-size: clamp(11px, 3vw, 12px);
+    color: var(--texte-2);
+    background: rgba(255,255,255,0.55);
+    padding: 2.5mm 3.5mm; border-radius: 1mm;
+  }
+  .resto-card .infos > div { line-height: 1.4; }
+  .resto-card .infos .info-label {
+    display: block;
+    font-weight: 600; color: var(--bleu-mer);
+    text-transform: uppercase;
+    font-size: clamp(9.5px, 2.4vw, 10.5px);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.3mm;
+  }
+
+  /* ============== Programme (timeline) ============== */
+  .day-block { margin-bottom: 8mm; }
+  .day-header {
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: 4mm;
+    border-bottom: 2px solid var(--bleu-mer);
+    padding-bottom: 2mm; margin-bottom: 4mm;
+  }
+  .day-header .day-name {
+    font-family: "Georgia", serif;
+    font-size: clamp(20px, 5.4vw, 26px);
+    color: var(--bleu-mer);
+  }
+  .day-header .day-date {
+    font-family: "Georgia", serif; font-style: italic;
+    color: var(--ocre);
+    font-size: clamp(13px, 3.4vw, 15px);
+  }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 16mm 1fr;
+    gap: 3mm; padding: 2mm 0;
+    border-left: 2px dotted var(--gris-line);
+    padding-left: 4mm; margin-left: 2mm;
+  }
+  .timeline-item .time {
+    font-family: "Georgia", serif; font-weight: 600;
+    color: var(--bleu-mer);
+    font-size: clamp(13px, 3.4vw, 14px);
+  }
+  .timeline-item .activity {
+    font-size: clamp(13px, 3.4vw, 14px);
+  }
+  .timeline-item .activity strong { color: var(--texte); }
+  .timeline-item .activity .note {
+    color: var(--gris); font-style: italic;
+    font-size: clamp(11.5px, 3vw, 12.5px);
+    display: block; margin-top: 1mm;
+    line-height: 1.45;
+  }
+
+  /* ============== Activity cards ============== */
+  .activity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm; margin-top: 3mm;
+  }
+  .activity-card {
+    background: var(--creme); padding: 3.5mm 4.5mm;
+    border-top: 2px solid var(--ocre);
+    border-radius: 1mm;
+  }
+  .activity-card.gem {
+    background: var(--violet-bg);
+    border-top: 2px solid var(--violet);
+  }
+  .activity-card.gem h4 { color: var(--violet); }
+  .activity-card h4 {
+    margin-top: 0; margin-bottom: 1.5mm;
+    color: var(--bleu-mer);
+    text-transform: none; font-family: "Georgia", serif;
+    font-size: clamp(14px, 3.8vw, 16px);
+    font-weight: normal; letter-spacing: 0;
+  }
+  .activity-card p {
+    font-size: clamp(12px, 3.2vw, 13px);
+    margin-bottom: 2mm;
+  }
+  .activity-card .pratique {
+    font-size: clamp(11px, 2.8vw, 12px);
+    color: var(--texte-3);
+    margin-top: 2.5mm; padding-top: 2mm;
+    border-top: 1px dotted var(--gris-line);
+    line-height: 1.45;
+  }
+  .activity-card .gem-tag,
+  .activity-card .star-tag {
+    display: inline-block;
+    font-size: clamp(9.5px, 2.4vw, 10px);
+    padding: 0.6mm 2.2mm;
+    border-radius: 1mm;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 2mm; font-weight: 600;
+  }
+  .activity-card .gem-tag  { background: var(--violet); color: var(--blanc-casse); }
+  .activity-card .star-tag { background: var(--ocre);   color: var(--texte); }
+
+  /* ============== Tips & alertes ============== */
+  .tip {
+    background: var(--creme-2);
+    border-left: 3px solid var(--ocre);
+    padding: 3.5mm 4mm; margin: 4mm 0;
+    font-size: clamp(12px, 3.2vw, 13px);
+    border-radius: 0 1.5mm 1.5mm 0;
+  }
+  .tip > strong:first-child {
+    color: var(--bleu-mer); font-family: "Georgia", serif;
+    font-style: italic; display: block;
+    margin-bottom: 1mm;
+    font-size: clamp(13px, 3.6vw, 15px);
+  }
+  .alert {
+    background: var(--creme-3);
+    border-left: 3px solid var(--orange);
+    padding: 3.5mm 4mm; margin: 4mm 0;
+    font-size: clamp(12px, 3.2vw, 13px);
+    border-radius: 0 1.5mm 1.5mm 0;
+  }
+  .alert > strong:first-child { color: var(--orange); display: block; margin-bottom: 1mm; }
+
+  ul.clean { list-style: none; padding-left: 0; margin: 0; }
+  ul.clean li {
+    padding: 0.8mm 0 0.8mm 6mm; position: relative;
+    font-size: clamp(13px, 3.4vw, 14px);
+  }
+  ul.clean li::before {
+    content: "▸"; position: absolute; left: 0;
+    color: var(--ocre);
+  }
+
+  /* ============== Closing ============== */
+  .closing {
+    margin: 10mm 0 6mm; padding: 7mm 5mm;
+    background: linear-gradient(135deg, var(--bleu-mer) 0%, var(--bleu-mer-2) 100%);
+    color: var(--blanc-casse); text-align: center;
+    border-radius: 2mm;
+  }
+  .closing p {
+    font-family: "Georgia", serif; font-style: italic;
+    font-size: clamp(15px, 4vw, 18px);
+    margin: 0;
+  }
+
+  .version-tag {
+    text-align: right;
+    font-family: "Georgia", serif; font-style: italic;
+    color: var(--gris);
+    font-size: clamp(11px, 2.9vw, 12px);
+    margin-top: 4mm;
+  }
+
+  /* ============== Options transport ============== */
+  .transport-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm; margin-top: 4mm;
+  }
+  .transport-card {
+    background: var(--creme);
+    padding: 4mm;
+    position: relative;
+    border-radius: 1mm;
+  }
+  .transport-card.economic { border-top: 4px solid var(--vert); }
+  .transport-card.fast     { border-top: 4px solid var(--orange); }
+  .transport-card .tc-tag {
+    font-size: clamp(9.5px, 2.4vw, 10.5px);
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--blanc-casse);
+    padding: 1mm 3mm; border-radius: 1mm;
+    display: inline-block; margin-bottom: 2.5mm;
+  }
+  .transport-card.economic .tc-tag { background: var(--vert); }
+  .transport-card.fast     .tc-tag { background: var(--orange); }
+  .transport-card h3 {
+    margin: 0 0 0.5mm 0;
+    font-family: "Georgia", serif; font-weight: normal;
+    font-size: clamp(17px, 4.6vw, 21px);
+    color: var(--bleu-mer);
+  }
+  .transport-card .tc-subtitle {
+    color: var(--gris); font-style: italic;
+    font-size: clamp(11.5px, 3vw, 12.5px);
+    margin-bottom: 3mm;
+  }
+  .transport-card .tc-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2mm;
+    margin: 3mm 0;
+    padding: 2.5mm 3mm;
+    background: rgba(255, 255, 255, 0.65);
+    border-radius: 1mm;
+  }
+  .transport-card .tc-stat { text-align: center; }
+  .transport-card .tc-stat-label {
+    font-size: clamp(9px, 2.3vw, 10px);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--gris); font-weight: 600;
+  }
+  .transport-card .tc-stat-value {
+    font-family: "Georgia", serif;
+    font-size: clamp(17px, 4.6vw, 21px);
+    color: var(--bleu-mer);
+    margin-top: 0.5mm;
+    line-height: 1.1;
+  }
+  .transport-card .tc-stat-value.green { color: var(--vert); }
+  .transport-card .tc-stat-value.red   { color: var(--orange); }
+  .transport-card .tc-detail {
+    font-size: clamp(12px, 3.2vw, 13px);
+    line-height: 1.45; margin: 0 0 2mm 0;
+  }
+  .transport-card .tc-detail strong { color: var(--bleu-mer); }
+  .transport-card .tc-steps {
+    list-style: none; padding: 0;
+    margin: 2mm 0 0 0; counter-reset: step;
+  }
+  .transport-card .tc-steps li {
+    counter-increment: step;
+    padding: 1.8mm 0 1.8mm 8mm;
+    position: relative;
+    font-size: clamp(11.5px, 3vw, 12.5px);
+    border-bottom: 1px dotted var(--gris-line);
+    line-height: 1.4;
+  }
+  .transport-card .tc-steps li:last-child { border-bottom: none; }
+  .transport-card .tc-steps li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 1.6mm;
+    width: 5mm; height: 5mm;
+    background: var(--bleu-mer); color: var(--blanc-casse);
+    border-radius: 50%; text-align: center;
+    line-height: 5mm;
+    font-family: "Georgia", serif;
+    font-size: clamp(9px, 2.3vw, 10px);
+    font-weight: 600;
+  }
+
+  /* ============== Mobile : grilles 2-col → 1-col ============== */
+  @media (max-width: 600px) {
+    .activity-grid,
+    .transport-grid {
+      grid-template-columns: 1fr;
+      gap: 4mm;
+    }
+    .resto-card .infos {
+      grid-template-columns: 1fr;
+      gap: 1.5mm;
+    }
+    .timeline-item {
+      grid-template-columns: 14mm 1fr;
+      gap: 2.5mm;
+    }
+    .page-wrap { padding: 5mm 4mm; }
+    .resto-card { padding: 4mm; }
+  }
+
+  /* ============== iOS PWA — safe areas (notch/dynamic island) ============== */
+  @supports (padding: max(0px)) {
+    .cover {
+      padding-top: max(18vh, env(safe-area-inset-top, 0px));
+    }
+    body {
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+  }
+
+  /* ============== Impression depuis le navigateur ============== */
+  @media print {
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+      @bottom-center {
+        content: "Cassis · 8-10 mai 2026 · " counter(page);
+        font-family: "Georgia", serif;
+        font-size: 8.5pt;
+        color: #8a8378;
+        font-style: italic;
+      }
+    }
+    @page:first { margin: 0; @bottom-center { content: ""; } }
+
+    body { background: white; }
+    .page-wrap { max-width: none; padding: 0; }
+
+    .cover {
+      page-break-after: always;
+      height: 297mm; min-height: 0; width: 210mm;
+      padding: 50mm 22mm 30mm 22mm;
+    }
+    .cover h1     { font-size: 60pt; }
+    .cover .eyebrow { font-size: 14pt; }
+    .cover .dates   { font-size: 16pt; }
+    .cover .footer-cover { font-size: 11pt; bottom: 22mm; left: 22mm; right: 22mm; }
+
+    .toc        { page-break-after: always; }
+    h2.section-title { page-break-before: always; page-break-after: avoid; }
+    h3.category, .category-intro { page-break-after: avoid; }
+    .cat-block, .resto-card, .activity-card,
+    .day-block, .timeline-item, .tip, .alert, .closing,
+    .transport-card { page-break-inside: avoid; }
+  }
+
+  /* Sélection */
+  ::selection { background: rgba(212, 165, 116, 0.4); color: var(--texte); }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="eyebrow">Carnet de voyage</div>
+  <h1>Week-end<br>à <em>Cassis</em></h1>
+  <div class="dates">Vendredi 8 — Dimanche 10 mai 2026</div>
+  <div class="footer-cover">
+    <div class="line"></div>
+    Trois jours entre calanques, vignobles &amp; terrasses<br>
+    pour un voyage en amoureux
+  </div>
+</div>
+
+<div class="page-wrap">
+
+<!-- TOC -->
+<div class="toc">
+  <h2>Sommaire</h2>
+  <div class="toc-item">
+    <span class="toc-num">0</span>
+    <span class="toc-title">Arrivée à Cassis
+      <span class="toc-sub">De la gare au logement (16 rue de l'Arène)</span>
+    </span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-num">I</span>
+    <span class="toc-title">Programme du week-end
+      <span class="toc-sub">Vendredi soir → Dimanche après-midi</span>
+    </span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-num">II</span>
+    <span class="toc-title">Restaurants
+      <span class="toc-sub">Trois cercles : pépites confidentielles, semi-confidentielles, valeurs sûres</span>
+    </span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-num">III</span>
+    <span class="toc-title">Activités
+      <span class="toc-sub">Incontournables &amp; pépites cachées</span>
+    </span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-num">IV</span>
+    <span class="toc-title">Bars &amp; Cavistes
+      <span class="toc-sub">Apéros vue mer &amp; adresses confidentielles</span>
+    </span>
+  </div>
+
+  <div class="tip" style="margin-top: 12mm;">
+    <strong>À garder en tête</strong>
+    Vendredi 8 mai est un jour férié (Victoire 1945) → certains commerces ferment, le port se remplit, et il vaut mieux réserver tout ce qui peut l'être. Le marché de Cassis se tient mercredi et vendredi matin sur la place Baragnon.
+  </div>
+</div>
+
+<!-- ARRIVEE -->
+<h2 class="section-title">0. Arrivée à Cassis</h2>
+<div class="section-meta">De la gare au logement · 16 rue de l'Arène (Chez Loïc Cassis)</div>
+
+<p>La gare SNCF de Cassis est située à <strong>27 avenue de la Gare</strong>, à environ <strong>3 km du centre du village</strong>. Le logement, situé en plein cœur du vieux Cassis, est accessible de deux façons selon que l'on privilégie le porte-monnaie ou la rapidité.</p>
+
+<div class="tip">
+  <strong>À noter</strong>
+  Lancez la commande Uber dès la sortie du logement à 17h45 le dimanche pour ne pas vous faire piéger par le temps d'attente avant le train de 18h29. Tout le séjour est pensé sans voiture : activités à pied, en bus, ou en Uber dans une enveloppe quotidienne de <strong>30-40€ maximum</strong>.
+</div>
+
+<div class="transport-grid">
+
+  <div class="transport-card economic">
+    <span class="tc-tag">Option économique</span>
+    <h3>Bus M01 / M371</h3>
+    <div class="tc-subtitle">La Marcouline · réseau métropolitain</div>
+
+    <div class="tc-stats">
+      <div class="tc-stat">
+        <div class="tc-stat-label">Tarif</div>
+        <div class="tc-stat-value green">2,10 €</div>
+        <div style="font-size: clamp(10px, 2.6vw, 11px); color: var(--gris); margin-top: 1mm;">par personne · ticket à bord</div>
+      </div>
+      <div class="tc-stat">
+        <div class="tc-stat-label">Durée totale</div>
+        <div class="tc-stat-value green">~25 min</div>
+        <div style="font-size: clamp(10px, 2.6vw, 11px); color: var(--gris); margin-top: 1mm;">bus + 5 min à pied</div>
+      </div>
+    </div>
+
+    <p class="tc-detail">
+      <strong>M371</strong> (navette gare ↔ centre-ville) passe toutes les 15-30 min, c'est l'option la plus régulière. Sinon <strong>M01</strong> (Cassis Casino — Gare SNCF), service jusqu'à 20h25.
+    </p>
+
+    <ol class="tc-steps">
+      <li>Sortie de la gare → arrêt « Gare SNCF » devant le bâtiment</li>
+      <li>Bus jusqu'à l'arrêt « Casino » ou « Belsunce » (~15-20 min)</li>
+      <li>5 min à pied : direction port, puis rue de l'Arène</li>
+    </ol>
+
+    <p class="tc-detail" style="margin-top: 4mm; font-size: clamp(11.5px, 3vw, 12.5px); color: var(--texte-3);">
+      <strong>Total pour 2 :</strong> 4,20 € · paiement à bord
+    </p>
+  </div>
+
+  <div class="transport-card fast">
+    <span class="tc-tag">Option rapide</span>
+    <h3>Uber (UberX)</h3>
+    <div class="tc-subtitle">Direct gare → 16 rue de l'Arène</div>
+
+    <div class="tc-stats">
+      <div class="tc-stat">
+        <div class="tc-stat-label">Tarif réel</div>
+        <div class="tc-stat-value red">15-25 €</div>
+      </div>
+      <div class="tc-stat">
+        <div class="tc-stat-label">Durée</div>
+        <div class="tc-stat-value red">5-7 min</div>
+        <div style="font-size: clamp(10px, 2.6vw, 11px); color: var(--gris); margin-top: 1mm;">+ 5-10 min d'attente</div>
+      </div>
+    </div>
+
+    <p class="tc-detail">
+      Cassis est couverte par UberX, mais avec <strong>peu de chauffeurs basés sur place</strong> — la plupart viennent de Marseille. Conséquence : sur les courses courtes en zone à faible offre, le surge pricing s'active presque systématiquement, surtout un vendredi soir de pont férié.
+    </p>
+
+    <ol class="tc-steps">
+      <li>Ouvrir l'app Uber, saisir « 16 rue de l'Arène »</li>
+      <li>Le prix s'affiche avant validation — accepter ou rafraîchir</li>
+      <li>Dépose à 50m du logement (zone piétonne au-delà)</li>
+    </ol>
+
+    <p class="tc-detail" style="margin-top: 4mm; font-size: clamp(11.5px, 3vw, 12.5px); color: var(--texte-3);">
+      <strong>Le minimum officiel UberX est de 8€</strong> (depuis mai 2022) mais en pratique, sur une zone comme Cassis avec surge ×1,5 à ×2, les courses tombent rarement sous 15€. À titre de comparaison, un Marseille → Cassis (16 km) tourne autour de 36-40€.
+    </p>
+  </div>
+
+</div>
+
+<!-- PROGRAMME -->
+<h2 class="section-title">I. Programme du week-end</h2>
+<div class="section-meta">Une trame, pas une feuille de route — adaptez selon l'envie du moment</div>
+
+<div class="day-block">
+  <div class="day-header">
+    <span class="day-name">Vendredi</span>
+    <span class="day-date">8 mai · arrivée &amp; première soirée</span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">18h00</span>
+    <span class="activity">
+      <strong>Arrivée à Cassis</strong> et dépose des bagages à l'appartement.
+      <span class="note">Le temps de poser les sacs, se rafraîchir et souffler.</span>
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">19h00</span>
+    <span class="activity">
+      <strong>Apéro vue mer au Rooftop Liautaud</strong> (ferme à 22h, ouvert le vendredi soir). Toit-terrasse de l'hôtel le plus ancien de Cassis, vue 360° sur la baie et le château.
+      <span class="note">Alternative : Victoria Cassis si le rooftop est complet, ou Caves du Port pour une cave atypique.</span>
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">20h30</span>
+    <span class="activity">
+      <strong>Dîner romantique</strong> — première soirée à Ô Rêv (bistronomique en ruelle, menu unique 48€) ou Le Poisson Rouge (impasse cachée, cuisine créative).
+      <span class="note">Réservation indispensable un soir de pont férié.</span>
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">23h00</span>
+    <span class="activity">
+      <strong>Balade nocturne sur le port</strong> et verre du soir à La Maison de Jo et Gaby (bar à vin convivial, ouvert jusqu'à 23h) ou Divino (ouvert jusqu'à 1h).
+      <span class="note">Le port est magique de nuit, lumières des bateaux et façades éclairées.</span>
+    </span>
+  </div>
+</div>
+
+<div class="day-block">
+  <div class="day-header">
+    <span class="day-name">Samedi</span>
+    <span class="day-date">9 mai · mer, vignes &amp; gastronomie</span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">9h00</span>
+    <span class="activity">
+      <strong>Petit-déjeuner</strong> en terrasse sur le port (les boulangeries du village ouvrent dès 7h).
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">10h00</span>
+    <span class="activity">
+      <strong>Tour des Calanques en bateau</strong> — visite commentée des 8 calanques en 1h45, départ Quai Saint-Pierre. Vue sur Port-Miou, Port-Pin, En-Vau et le Cap Canaille depuis la mer. Sans réservation, premier arrivé premier servi.
+      <span class="note">Compter ~22€/pers. Préférer la matinée pour une lumière idéale et la mer plus calme.</span>
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">12h30</span>
+    <span class="activity">
+      <strong>Déjeuner à La Brasserie du Corton</strong> (petite sœur bistronomique de la Villa Madie 3*, terrasse face au Cap Canaille).
+      <span class="note">Menu unique en plusieurs séquences à 70€. Seule option dégustation au déjeuner ce week-end — la Brasserie ne sert qu'au déjeuner avant le 15 juin. ~15 min à pied du logement.</span>
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">15h30</span>
+    <span class="activity">
+      <strong>Dégustation au domaine viticole</strong> — Cassis Bodin (à 20 min à pied) ou Clos Sainte-Magdeleine (entre vignes et mer, vue exceptionnelle). Tous deux accessibles à pied depuis le centre.
+      <span class="note">AOC Cassis : l'une des cinq premières appellations françaises, célèbre pour ses blancs minéraux.</span>
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">18h00</span>
+    <span class="activity">
+      <strong>Sieste, douche</strong> — temps libre dans le village.
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">19h30</span>
+    <span class="activity">
+      <strong>Apéritif</strong> aux Caves du Port (cave à manger atypique, sélection bières &amp; cocktails) ou retour au Rooftop Liautaud pour le coucher du soleil.
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">20h45</span>
+    <span class="activity">
+      <strong>Dîner gastronomique du séjour</strong> — La Presqu'île (menu en 5 ou 8 séquences, vue Cap Canaille) <em>ou</em> Les Belles Canailles (5* Roches Blanches, "Ma Bouillabaisse" signature).
+      <span class="note">Le rendez-vous principal du week-end. Réservation à faire dès maintenant.</span>
+    </span>
+  </div>
+</div>
+
+<div class="day-block">
+  <div class="day-header">
+    <span class="day-name">Dimanche</span>
+    <span class="day-date">10 mai · douceur &amp; retour</span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">9h30</span>
+    <span class="activity">
+      <strong>Brunch ou petit-déjeuner</strong> tranquille en terrasse, au rythme du port qui s'éveille.
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">10h30</span>
+    <span class="activity">
+      <strong>Promenade du Sentier du Petit Prince</strong> — boucle facile de 1h depuis Port-Miou (~25 min de marche depuis le centre), accessible sans effort. Vues sur les yachts, les pinèdes et le Cap Canaille au loin.
+      <span class="note">Détour pépite : passer par le Phare de Cassis au retour, vraie balade confidentielle (76 avis Google seulement).</span>
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">12h30</span>
+    <span class="activity">
+      <strong>Déjeuner à La Brasserie du Corton</strong> (samedi &amp; dimanche midi uniquement) ou Olea Cassis (bistronomique sur le quai).
+      <span class="note">La Brasserie du Corton offre la seule expérience de menu en séquence accessible au déjeuner ce week-end. Si elle n'a pas été choisie samedi midi, c'est ici qu'il faut la caler.</span>
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">14h30</span>
+    <span class="activity">
+      <strong>Sieste digestive ou retour sur le port</strong> — café en terrasse, lecture au soleil ou retour à l'appartement pour une pause.
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">15h30</span>
+    <span class="activity">
+      <strong>Dernière respiration</strong> — au choix : balade à pied jusqu'au Belvédère de Port-Miou (point de vue confidentiel), ou flânerie shopping (L'Atelier du Pêcheur pour un souvenir artisanal), ou simple bain de soleil sur la plage du Bestouan.
+      <span class="note">Penser à acheter une bouteille de Cassis blanc à ramener (chez Jo et Gaby, Divino ou directement chez un domaine).</span>
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">17h00</span>
+    <span class="activity">
+      <strong>Récupération bagages &amp; verre d'au revoir</strong> au port, derniers regards sur la baie.
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">17h45</span>
+    <span class="activity">
+      <strong>Direction la gare</strong> de Cassis (3 km du centre — taxi ou navette à prévoir).
+    </span>
+  </div>
+  <div class="timeline-item">
+    <span class="time">18h29</span>
+    <span class="activity">
+      <strong>Départ du train</strong> vers Marseille puis correspondance TGV pour Nice.
+    </span>
+  </div>
+</div>
+
+<!-- RESTAURANTS -->
+<h2 class="section-title">II. Restaurants</h2>
+<div class="section-meta">Trois cercles : pépites confidentielles, semi-confidentielles, valeurs sûres</div>
+
+<div class="cat-block">
+<h3 class="category"><span class="cat-num">A.</span> Pépites confidentielles <span class="cat-tag">moins de 300 avis Google</span></h3>
+<p class="category-intro">Bistronomique-gastronomique, hors radar touristique.</p>
+
+<div class="resto-card featured">
+  <div class="resto-header">
+    <h3>Olea Cassis</h3>
+    <span class="badge gold">Coup de cœur</span>
+  </div>
+  <div class="meta">15 Quai Jean Jacques Barthélémy · 206 avis · 4,9 ★</div>
+  <div class="desc">Antenne d'une référence marseillaise (4,9 sur 992 avis). Carpaccio d'artichauts truffé, risotto crémeux aux gambas, tartare de saumon agrumes. Sur le quai mais cuisine très soignée et raw bar.</div>
+  <div class="infos">
+    <div><span class="info-label">Style</span> Méditerranéen créatif</div>
+    <div><span class="info-label">Budget 2 pers.</span> ~110-140€ vin compris</div>
+    <div><span class="info-label">Forces</span> Carte courte, produits frais</div>
+    <div><span class="info-label">Réservation</span> 06 16 45 60 36</div>
+  </div>
+  <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Olea+Cassis">▸ Itinéraire</a><a class="btn-link btn-tel" href="tel:+33616456036">▸ Réserver</a><a class="btn-link btn-web" href="https://olea-marseille.fr/" target="_blank" rel="noopener">▸ Site</a></div>
+</div>
+</div>
+
+<div class="resto-card">
+  <div class="resto-header">
+    <h3>Les Belles Canailles</h3>
+    <span class="badge">Gastro 5★</span>
+  </div>
+  <div class="meta">9 Av. des Calanques (Roches Blanches) · 294 avis · 4,1 ★</div>
+  <div class="desc">Restaurant gastronomique du palace 5* avec véritable menu dégustation en séquences. Chef Nicolas Sintes + chef pâtissier Valentin Fabry. Plat signature "Ma Bouillabaisse" revisitée, terrasse Cap Canaille.</div>
+  <div class="infos">
+    <div><span class="info-label">Style</span> Gastronomique méditerranéen</div>
+    <div><span class="info-label">Budget 2 pers.</span> ~175-200€ vin compris</div>
+    <div><span class="info-label">Forces</span> Menu dégustation, vue palace</div>
+    <div><span class="info-label">Réservation</span> 04 42 01 01 05</div>
+  </div>
+  <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Les+Belles+Canailles+Cassis">▸ Itinéraire</a><a class="btn-link btn-tel" href="tel:+33442010105">▸ Réserver</a><a class="btn-link btn-web" href="https://www.roches-blanches-cassis.com/restaurants-bars/restaurant-belles-canailles/" target="_blank" rel="noopener">▸ Site</a></div>
+</div>
+
+<div class="cat-block">
+<h3 class="category"><span class="cat-num">B.</span> Semi-confidentielles <span class="cat-tag">300 à 500 avis Google</span></h3>
+<p class="category-intro">Connues des locaux et des fins gastronomes, encore loin de l'engorgement touristique.</p>
+
+<div class="resto-card">
+  <div class="resto-header">
+    <h3>Francesca</h3>
+    <span class="badge purple">Italien créatif</span>
+  </div>
+  <div class="meta">6 Rue Adolphe Thiers · 344 avis · 4,8 ★</div>
+  <div class="desc">Petite trattoria à l'écart du port, tenue par Francesca elle-même. Caprese soignée, gnocchi aux champignons et ail, filet bien cuit. Service quasi familial, ambiance cosy. Souvent mentionné comme « le meilleur italien de Cassis ».</div>
+  <div class="infos">
+    <div><span class="info-label">Style</span> Italien soigné, intimiste</div>
+    <div><span class="info-label">Budget 2 pers.</span> ~90-120€ vin compris</div>
+    <div><span class="info-label">Forces</span> Pâtes maison, accueil chaleureux</div>
+    <div><span class="info-label">Réservation</span> 06 23 88 06 10</div>
+  </div>
+  <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Francesca+Cassis">▸ Itinéraire</a><a class="btn-link btn-tel" href="tel:+33623880610">▸ Réserver</a><a class="btn-link btn-web" href="https://www.francesca-cassis.com/" target="_blank" rel="noopener">▸ Site</a></div>
+</div>
+</div>
+
+<div class="resto-card">
+  <div class="resto-header">
+    <h3>Cassis et Romarin</h3>
+    <span class="badge purple">Maison &amp; saisons</span>
+  </div>
+  <div class="meta">20 Rue Adolphe Thiers · 368 avis · 5,0 ★</div>
+  <div class="desc">Adresse intimiste tenue par un couple, carte renouvelée chaque jour selon les arrivages. Quelques plats seulement, tout fait maison, produits régionaux. Cuisine « comme à la maison » mais soignée — note Google parfaite (5,0). Plutôt déjeuner / dîner léger.</div>
+  <div class="infos">
+    <div><span class="info-label">Style</span> Cuisine de saison artisanale</div>
+    <div><span class="info-label">Budget 2 pers.</span> ~80-110€ vin compris</div>
+    <div><span class="info-label">Forces</span> Carte du jour, ambiance familiale</div>
+    <div><span class="info-label">Réservation</span> 09 73 89 69 63</div>
+  </div>
+  <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Cassis+et+Romarin">▸ Itinéraire</a><a class="btn-link btn-tel" href="tel:+33973896963">▸ Réserver</a><a class="btn-link btn-web" href="https://www.instagram.com/cassisetromarin/" target="_blank" rel="noopener">▸ Site</a></div>
+</div>
+
+<div class="resto-card">
+  <div class="resto-header">
+    <h3>Le petit OYSTER BAR</h3>
+    <span class="badge purple">Iode &amp; finesse</span>
+  </div>
+  <div class="meta">3 Rue Brémond · 378 avis · 4,8 ★</div>
+  <div class="desc">Format hybride entre bar à huîtres et table de petits plats raffinés. Huîtres locales mignonnette/citron, moules gratinées, planche épicurienne. Cadre cinématographique dans une ruelle hors port. Idéal en complément (pas pour le grand soir).</div>
+  <div class="infos">
+    <div><span class="info-label">Style</span> Bar à huîtres + tapas marins</div>
+    <div><span class="info-label">Budget 2 pers.</span> ~70-100€ vin compris</div>
+    <div><span class="info-label">Forces</span> Produits frais, format léger</div>
+    <div><span class="info-label">Réservation</span> 04 88 42 47 51</div>
+  </div>
+  <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Le+petit+OYSTER+BAR+Cassis">▸ Itinéraire</a><a class="btn-link btn-tel" href="tel:+33488424751">▸ Réserver</a><a class="btn-link btn-web" href="https://www.google.com/search?q=Le+petit+Oyster+Bar+Cassis" target="_blank" rel="noopener">▸ Site</a></div>
+</div>
+
+<div class="cat-block">
+<h3 class="category"><span class="cat-num">C.</span> Tables avec menu en séquence <span class="cat-tag">l'expérience tasting menu</span></h3>
+
+<div class="resto-card">
+  <div class="resto-header">
+    <h3>La Presqu'île</h3>
+    <span class="badge gold">Vue exceptionnelle</span>
+  </div>
+  <div class="meta">Quartier Port Miou · 2 095 avis · 4,4 ★</div>
+  <div class="desc">Restaurant gastronomique perché sur les rochers face au Cap Canaille, chef Hugo Lamboulé (passé chez Bras et Meilleur). Menus en 5 séquences (74€) ou 8 séquences (105€). Cuisine inventive, produits de Provence et de Méditerranée.</div>
+  <div class="infos">
+    <div><span class="info-label">Menu 5 temps</span> 74€/pers</div>
+    <div><span class="info-label">Menu 8 temps</span> 105€/pers</div>
+    <div><span class="info-label">Budget 2 pers.</span> ~190-250€ vin compris</div>
+    <div><span class="info-label">Réservation</span> 04 42 01 03 77</div>
+  </div>
+  <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=La+Presqu%27%C3%AEle+Cassis">▸ Itinéraire</a><a class="btn-link btn-tel" href="tel:+33442010377">▸ Réserver</a><a class="btn-link btn-web" href="https://www.restaurant-la-presquile.fr/" target="_blank" rel="noopener">▸ Site</a></div>
+</div>
+
+<div class="resto-card">
+  <div class="resto-header">
+    <h3>La Brasserie du Corton</h3>
+    <span class="badge green">Déjeuner uniquement</span>
+  </div>
+  <div class="meta">Av. du Revestel · Petite sœur de la Villa Madie ★★★</div>
+  <div class="desc">Même équipe que la Villa Madie 3 étoiles, format menu fixe en séquences. Tartare de bœuf aux huîtres de Tamaris, sôcisse de Marseille, tarte au citron Madie. Terrasse face à l'Anse de Corton.</div>
+  <div class="infos">
+    <div><span class="info-label">Menu unique</span> 70€/pers</div>
+    <div><span class="info-label">Budget 2 pers.</span> ~165-180€ vin compris</div>
+    <div><span class="info-label">Service</span> Jeudi-dimanche, déjeuner seul jusqu'au 15 juin</div>
+    <div><span class="info-label">Réservation</span> 04 96 18 00 00</div>
+  </div>
+  <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=La+Brasserie+du+Corton+Cassis">▸ Itinéraire</a><a class="btn-link btn-tel" href="tel:+33496180000">▸ Réserver</a><a class="btn-link btn-web" href="https://lavillamadie.com/la-brasserie-du-corton/" target="_blank" rel="noopener">▸ Site</a></div>
+</div>
+
+<div class="resto-card">
+  <div class="resto-header">
+    <h3>Ô Rêv</h3>
+    <span class="badge purple">Bistronomique</span>
+  </div>
+  <div class="meta">5 Rue Lamartine · 482 avis TheFork · 4,5 ★ Google · Travellers' Choice 2025</div>
+  <div class="desc">Niché dans une ruelle ancienne à 1 minute du port mais à l'écart de l'agitation. Cuisine bistronomique méditerranéenne du chef Carlos Nuñez avec touches japonaises (tataki de thon, carpaccio de dorade wakamé, vitello tonnato, risotto de gambas). Décor bohème chic, terrasse en ruelle calme — table parfaite pour un dîner à deux. Dîner uniquement, fermé le mercredi.</div>
+  <div class="infos">
+    <div><span class="info-label">Menu unique</span> 48€/pers</div>
+    <div><span class="info-label">Carte</span> ~55-65€/pers</div>
+    <div><span class="info-label">Budget 2 pers.</span> ~120-160€ vin compris</div>
+    <div><span class="info-label">Réservation</span> 04 42 01 23 03</div>
+  </div>
+  <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=%C3%94+R%C3%AAv+Cassis+rue+Lamartine">▸ Itinéraire</a><a class="btn-link btn-tel" href="tel:+33442012303">▸ Réserver</a><a class="btn-link btn-web" href="https://www.orevcassis.com/" target="_blank" rel="noopener">▸ Site</a></div>
+</div>
+</div>
+
+<div class="cat-block">
+<h3 class="category"><span class="cat-num">D.</span> Valeur sûre complémentaire</h3>
+<div class="resto-card">
+  <div class="resto-header">
+    <h3>Le Poisson Rouge</h3>
+  </div>
+  <div class="meta">Impasse Farine · 771 avis · 4,6 ★</div>
+  <div class="desc">Bistronomique créatif dans une impasse cachée, hors strip touristique. Pas de menu en séquence formel mais carte raffinée bien notée par Gault&amp;Millau. Ambiance intime et romantique.</div>
+  <div class="infos">
+    <div><span class="info-label">Carte</span> Entrée 16€, plat 28-29€, dessert 8€</div>
+    <div><span class="info-label">Budget 2 pers.</span> ~135-150€ vin compris</div>
+    <div><span class="info-label">Réservation</span> 04 42 71 53 75</div>
+  </div>
+  <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Le+Poisson+Rouge+Cassis">▸ Itinéraire</a><a class="btn-link btn-tel" href="tel:+33442715375">▸ Réserver</a><a class="btn-link btn-web" href="https://lepoissonrougerestaurantcassis.com/" target="_blank" rel="noopener">▸ Site</a></div>
+</div>
+</div>
+
+<div class="tip">
+  <strong>Tactique réservations</strong>
+  Long week-end férié, places très demandées. Idéalement : bloquer la table gastronomique du samedi soir (La Presqu'île ou Les Belles Canailles) en priorité, puis les pépites de vendredi et dimanche. La Brasserie du Corton ne sert qu'au déjeuner avant le 15 juin → caler ce repas le samedi midi.
+</div>
+
+<!-- ACTIVITES -->
+<h2 class="section-title">III. Activités</h2>
+<div class="section-meta">Incontournables &amp; pépites cachées</div>
+
+<div class="cat-block">
+<h3 class="category"><span class="cat-num">A.</span> Les incontournables <span class="cat-tag">à faire au moins une fois</span></h3>
+<p class="category-intro">Tous accessibles à pied depuis le centre — les piliers de tout séjour à Cassis.</p>
+
+<div class="activity-grid">
+  <div class="activity-card">
+    <span class="star-tag">Mainstream</span>
+    <h4>Tour des 8 Calanques en bateau</h4>
+    <p>L'expérience signature et la meilleure façon de voir le Cap Canaille et les falaises spectaculaires depuis la mer. Boucle commentée de 1h45 depuis le Quai Saint-Pierre, vue sur Port-Miou, Port-Pin, En-Vau et les autres calanques.</p>
+    <div class="pratique">~22€/pers · billetterie sur place dès 9h · 5 362 avis · 4,6 ★</div>
+    <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Quai+Saint-Pierre+Cassis">▸ Itinéraire</a><a class="btn-link btn-web" href="https://www.calanquesdecassis.com/" target="_blank" rel="noopener">▸ Site</a></div>
+  </div>
+  <div class="activity-card">
+    <span class="star-tag">Mainstream</span>
+    <h4>Domaines viticoles AOC Cassis</h4>
+    <p>L'une des cinq premières AOC françaises (1936). Blancs minéraux issus de Marsanne, Clairette et Ugni Blanc. Cassis Bodin (Av. de Carnoux, 20 min à pied) et Clos Sainte-Magdeleine (Av. du Revestel, 25 min à pied) ouverts samedi.</p>
+    <div class="pratique">À pied depuis le centre · réservation conseillée · ~15€ la dégustation · fermés dimanche</div>
+    <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Cassis+Bodin+Domaine">▸ Itinéraire</a><a class="btn-link btn-tel" href="tel:+33442010011">▸ Réserver</a><a class="btn-link btn-web" href="https://www.cassisbodin.com/" target="_blank" rel="noopener">▸ Site</a></div>
+  </div>
+  <div class="activity-card">
+    <span class="star-tag">Mainstream</span>
+    <h4>Promenade port + château perché</h4>
+    <p>Du Quai des Baux jusqu'au pied du Château de Cassis (XIVᵉ siècle, aujourd'hui hôtel 5*) puis au belvédère. Vue plongeante sur le port et la baie. Au retour, ruelles pastel et façades provençales.</p>
+    <div class="pratique">Accès libre · ~30 min · meilleur en fin d'après-midi pour la lumière dorée</div>
+  </div>
+  <div class="activity-card">
+    <span class="star-tag">Mainstream</span>
+    <h4>Vieille ville &amp; ruelles de Cassis</h4>
+    <p>Place Baragnon, place du Grand Carnot, rue Brémond, rue Adolphe Thiers. Boutiques d'artisans, glaciers, façades colorées. Le cœur authentique du village, idéal en flânerie sans but.</p>
+    <div class="pratique">Tout est à pied · gratuit · à éviter en plein soleil de midi</div>
+  </div>
+</div>
+</div>
+
+<div class="cat-block">
+<h3 class="category"><span class="cat-num">B.</span> Les pépites cachées <span class="cat-tag">hors radar Google Maps</span></h3>
+<p class="category-intro">Adresses peu fréquentées, à pied ou à deux pas — points de vue confidentiels et expériences locales.</p>
+
+<div class="activity-grid">
+  <div class="activity-card gem">
+    <span class="gem-tag">Pépite · 76 avis</span>
+    <h4>Phare de Cassis</h4>
+    <p>Tout au bout d'une jetée discrète, à 5 minutes du port. Très peu visité (76 avis Google !). Vue plongeante sur les falaises, la baie, le château. Idéal pour une balade à deux au lever ou coucher du soleil, loin de la cohue.</p>
+    <div class="pratique">Accès libre · gratuit · 10 min de marche depuis le port</div>
+    <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Phare+de+Cassis">▸ Itinéraire</a><a class="btn-link btn-web" href="https://www.google.com/search?q=Phare+de+Cassis" target="_blank" rel="noopener">▸ Site</a></div>
+  </div>
+  <div class="activity-card gem">
+    <span class="gem-tag">Pépite · 94 avis</span>
+    <h4>Belvédère de Port-Miou</h4>
+    <p>Point de vue panoramique sur le long bras de mer de Port-Miou. Sensation cachée alors que tout le monde est en bas. Court arrêt sur le chemin du Sentier du Petit Prince.</p>
+    <div class="pratique">94 avis · 4,8 ★ · ~25 min de marche depuis le centre</div>
+    <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Belv%C3%A9d%C3%A8re+de+Port+Miou+Cassis">▸ Itinéraire</a><a class="btn-link btn-web" href="https://www.google.com/search?q=Belv%C3%A9d%C3%A8re+Port+Miou+Cassis" target="_blank" rel="noopener">▸ Site</a></div>
+  </div>
+  <div class="activity-card gem">
+    <span class="gem-tag">Pépite · 147 avis</span>
+    <h4>Sentier du Petit Prince</h4>
+    <p>Boucle facile (1h) depuis Port-Miou — pas une rando engagée, juste une promenade plate avec vues sur les yachts, pinèdes et Cap Canaille au loin. Curieusement peu fréquenté.</p>
+    <div class="pratique">147 avis · 4,8 ★ · chaussures de ville suffisent · accès à pied</div>
+    <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Sentier+du+Petit+Prince+Cassis">▸ Itinéraire</a><a class="btn-link btn-web" href="https://www.google.com/search?q=Sentier+du+Petit+Prince+Cassis" target="_blank" rel="noopener">▸ Site</a></div>
+  </div>
+  <div class="activity-card gem">
+    <span class="gem-tag">Pépite</span>
+    <h4>Musée Méditerranéen de Cassis</h4>
+    <p>Petit musée municipal d'arts et traditions populaires, niché dans une ancienne maison du XVIIIᵉ. Collections d'objets locaux, peintures de l'école de Cassis (où passa Matisse), histoire du village. Souvent désert.</p>
+    <div class="pratique">Place Baragnon · entrée libre · ~30 min de visite</div>
+    <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Mus%C3%A9e+M%C3%A9diterran%C3%A9en+Cassis">▸ Itinéraire</a><a class="btn-link btn-web" href="https://www.google.com/search?q=Mus%C3%A9e+M%C3%A9diterran%C3%A9en+Cassis" target="_blank" rel="noopener">▸ Site</a></div>
+  </div>
+  <div class="activity-card gem">
+    <span class="gem-tag">Pépite · 29 avis</span>
+    <h4>L'Atelier du Pêcheur</h4>
+    <p>Boutique-atelier d'un artisan-artiste qui crée bijoux et objets eux-mêmes (raffia de Madagascar, art local). Pour ramener un souvenir non-touristique, et discuter une demi-heure avec un personnage.</p>
+    <div class="pratique">Av. Dr Emmanuel Agostini · 06 79 81 66 99 · 5,0 ★</div>
+    <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=L%27Atelier+du+P%C3%AAcheur+Cassis">▸ Itinéraire</a><a class="btn-link btn-web" href="https://www.latelierdupecheurcassis.fr/" target="_blank" rel="noopener">▸ Site</a></div>
+  </div>
+  <div class="activity-card gem">
+    <span class="gem-tag">Pépite</span>
+    <h4>Marché de Cassis</h4>
+    <p>Mercredi &amp; vendredi matin sur la place Baragnon. Le 8 mai (vendredi férié), le marché tient parfois — ou bascule au samedi. À vérifier sur place. Producteurs locaux, fromages, huiles d'olive, fruits.</p>
+    <div class="pratique">Place Baragnon · 8h-13h · totalement gratuit</div>
+    <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Place+Baragnon+Cassis">▸ Itinéraire</a><a class="btn-link btn-web" href="https://www.google.com/search?q=March%C3%A9+de+Cassis+Place+Baragnon+horaires" target="_blank" rel="noopener">▸ Site</a></div>
+  </div>
+</div>
+</div>
+
+<div class="tip">
+  <strong>L'astuce du connaisseur</strong>
+  Le combo gagnant pour le samedi : tour des calanques en bateau le matin (Cap Canaille vu depuis la mer), déjeuner Brasserie du Corton, dégustation chez Cassis Bodin l'après-midi (à pied), dîner gastronomique le soir. Vous aurez vu les calanques sous trois angles complètement différents — eau, vignes, table panoramique — sans jamais avoir besoin d'une voiture.
+</div>
+
+<!-- BARS -->
+<h2 class="section-title">IV. Bars &amp; Cavistes</h2>
+<div class="section-meta">Apéros au coucher du soleil &amp; verres de fin de soirée</div>
+
+<h3>Vue panoramique</h3>
+
+<div class="resto-card featured">
+  <div class="resto-header">
+    <h3>Rooftop Liautaud</h3>
+    <span class="badge gold">Vue 360°</span>
+  </div>
+  <div class="meta">Hôtel Liautaud · Rue Marcel Barthélémy · 128 avis · 4,4 ★</div>
+  <div class="desc">Toit-terrasse de l'hôtel le plus ancien de Cassis (1870), entièrement rénové. Vue à couper le souffle sur le port, le château et la baie. Cocktails signature dont le Simone et la Virginia (hommage à Virginia Woolf), tapas. Idéal pour le coucher du soleil.</div>
+  <div class="infos">
+    <div><span class="info-label">Cocktails</span> 15 à 22€</div>
+    <div><span class="info-label">Horaires</span> Vendredi-dimanche 17h-22h</div>
+    <div><span class="info-label">Apéro 2 pers.</span> ~40-55€ (2 cocktails + tapas)</div>
+    <div><span class="info-label">Bon plan</span> Y aller en début de soirée</div>
+  </div>
+  <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Hotel+Liautaud+Cassis">▸ Itinéraire</a><a class="btn-link btn-tel" href="tel:+33451680202">▸ Réserver</a><a class="btn-link btn-web" href="https://www.hotelliautaudcassis.com/" target="_blank" rel="noopener">▸ Site</a></div>
+</div>
+
+<h3>Bars à vin</h3>
+
+<div class="resto-card">
+  <div class="resto-header">
+    <h3>La Maison de Jo et Gaby</h3>
+    <span class="badge green">Pépite</span>
+  </div>
+  <div class="meta">6 Rue Dr Séverin Icard · 193 avis · 4,7 ★</div>
+  <div class="desc">Bar à vin tenu par Bruno, un hôte adorable qui a baptisé l'adresse en hommage à ses parents. Sélection des 12 domaines de Cassis + caves de toutes les régions de France. Charcuterie ibérique (Pata Negra), fromages régionaux, truffe, caviar français. Bande-son jazzy.</div>
+  <div class="infos">
+    <div><span class="info-label">Verre de vin</span> 5 à 7€ (généreux)</div>
+    <div><span class="info-label">Planches</span> ~15-25€</div>
+    <div><span class="info-label">Apéro 2 pers.</span> ~30-45€</div>
+    <div><span class="info-label">Horaires</span> Mardi-samedi 10h30-13h / 17h30-23h</div>
+  </div>
+  <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=La+Maison+de+Jo+et+Gaby+Cassis">▸ Itinéraire</a><a class="btn-link btn-web" href="https://www.lamaisondejoetgaby.fr/" target="_blank" rel="noopener">▸ Site</a></div>
+</div>
+
+<div class="resto-card">
+  <div class="resto-header">
+    <h3>Divino</h3>
+  </div>
+  <div class="meta">3 Rue Alexandre Rossat · 204 avis · 4,5 ★</div>
+  <div class="desc">Petit bar à vin à l'écart du strip touristique, sélection de vins locaux et de bières, planches de fromages et charcuteries. Ambiance détendue, ouvert tard tous les jours.</div>
+  <div class="infos">
+    <div><span class="info-label">Verre de vin</span> 5 à 8€</div>
+    <div><span class="info-label">Planches</span> ~12-18€</div>
+    <div><span class="info-label">Apéro 2 pers.</span> ~25-40€</div>
+    <div><span class="info-label">Horaires</span> Tous les jours 15h30-1h</div>
+  </div>
+  <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Divino+Cassis">▸ Itinéraire</a><a class="btn-link btn-web" href="https://www.google.com/search?q=Divino+bar+%C3%A0+vin+Cassis" target="_blank" rel="noopener">▸ Site</a></div>
+</div>
+
+<h3>Cocktails &amp; cave atypique</h3>
+
+<div class="resto-card">
+  <div class="resto-header">
+    <h3>Les Caves du Port</h3>
+    <span class="badge green">Confidentiel</span>
+  </div>
+  <div class="meta">32 Rue Thérèse Rastit · 159 avis · 4,6 ★</div>
+  <div class="desc">Une cave-bar planquée dans une rue secondaire, tenue par Vincent. Sélection impressionnante de bières du monde, cocktails créatifs, ambiance cosy avec canapés. La pépite qu'on garde pour soi.</div>
+  <div class="infos">
+    <div><span class="info-label">Bières craft</span> 6 à 9€</div>
+    <div><span class="info-label">Cocktails</span> 10 à 14€</div>
+    <div><span class="info-label">Apéro 2 pers.</span> ~25-35€</div>
+    <div><span class="info-label">Horaires</span> Tous les jours 11h-22h</div>
+  </div>
+  <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Les+Caves+du+Port+Cassis">▸ Itinéraire</a><a class="btn-link btn-web" href="https://www.google.com/search?q=Les+Caves+du+Port+Cassis" target="_blank" rel="noopener">▸ Site</a></div>
+</div>
+
+<div class="resto-card">
+  <div class="resto-header">
+    <h3>Victoria Cassis</h3>
+  </div>
+  <div class="meta">27 Av. Victor Hugo · 87 avis · 4,7 ★</div>
+  <div class="desc">Bar central, équipe attentive, mix de locaux et de voyageurs. Cocktails bien dosés, idéal pour un St Germain Spritz au cœur du village avant ou après dîner.</div>
+  <div class="infos">
+    <div><span class="info-label">Cocktails</span> 10 à 14€</div>
+    <div><span class="info-label">Café/spritz</span> 4 à 8€</div>
+    <div><span class="info-label">Apéro 2 pers.</span> ~20-30€</div>
+    <div><span class="info-label">Horaires</span> Tous les jours 9h-2h</div>
+  </div>
+  <div class="card-actions"><a class="btn-link btn-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Victoria+Cassis+Bar">▸ Itinéraire</a><a class="btn-link btn-web" href="https://www.google.com/search?q=Victoria+bar+Cassis+Avenue+Victor+Hugo" target="_blank" rel="noopener">▸ Site</a></div>
+</div>
+
+<div class="closing">
+  <p>Bon week-end à Cassis,<br>entre vignes et calanques.</p>
+</div>
+
+</div><!-- /.page-wrap -->
+
+<!-- Service worker enregistrement (mode standalone offline minimal) -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('./service-worker.js').catch(function () {
+        /* offline support optionnel — silencieux si KO */
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
